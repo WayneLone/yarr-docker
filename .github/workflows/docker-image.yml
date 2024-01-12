@@ -2,16 +2,17 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "main"
     tags:
       - "v*.*.*"
 
 jobs:
   build:
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Docker meta
       id: meta
@@ -19,9 +20,11 @@ jobs:
       with:
         images: vkarz/yarr
         tags: |
-          type=raw,value=latest
-          type=ref,enable=true,priority=600,prefix=,suffix=,event=branch
+          type=ref,event=branch
           type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+          type=sha
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
