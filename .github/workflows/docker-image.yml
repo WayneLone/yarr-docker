@@ -20,6 +20,7 @@ jobs:
       with:
         images: vkarz/yarr
         tags: |
+          type=ref,event=branch
           type=semver,pattern={{version}}
 
     - name: Set up QEMU
