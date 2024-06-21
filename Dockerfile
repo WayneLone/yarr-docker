@@ -8,10 +8,10 @@ WORKDIR /src
 # RUN git clone https://mirror.ghproxy.com/https://github.com/nkanaev/yarr.git .
 RUN git clone https://github.com/nkanaev/yarr.git .
 ENV CGO_CFLAGS="-D_LARGEFILE64_SOURCE"
-RUN make build_linux
+RUN make build_default
 
 FROM alpine:latest
-COPY --from=build /src/_output/linux/yarr /usr/local/bin/yarr
+COPY --from=build /src/_output/yarr /usr/local/bin/yarr
 # In China
 # RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
 RUN apk --no-cache add tzdata ca-certificates && mkdir /data
